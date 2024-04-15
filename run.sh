@@ -8,10 +8,11 @@ cp .env.sample .env
 npm install newman # newman used in run-api-tests.sh
 npm install
 
-# run the app
+# starting the service
 npm start & 
 
 # run the tests
 APIURL=http://localhost:5000/api ./run-api-tests.sh
 
-npm stop # test if this works
+# stopping the service (warning this will kill all node processes)
+pkill node
