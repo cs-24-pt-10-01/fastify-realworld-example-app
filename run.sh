@@ -1,8 +1,26 @@
 # copy env file (just use example)
 cp .env.sample .env
 
-# instrument
-# TODO
+# --- instrument ---
+
+# clone instrumentation tool
+cd ..
+git clone https://github.com/cs-24-pt-10-01/Using-acorn-to-decorate-JS.git
+
+# install dependencies
+cd ./Using-acorn-to-decorate-JS
+npm install package.json
+cd ..
+
+# instrumenting
+node ./Using-acorn-to-decorate-JS/decorateFolder.js ./fastify-realworld-example-app
+
+# removing instrumentation tool
+rm -rf Using-acorn-to-decorate-JS
+
+cd ./fastify-realworld-example-app
+
+# --- run test ---
 
 # install stuff
 npm install newman # newman used in run-api-tests.sh
