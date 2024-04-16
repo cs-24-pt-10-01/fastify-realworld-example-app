@@ -1,13 +1,14 @@
 # copy env file (just use example)
 cp .env.sample .env
 
-mv knexfile.js knexfile.js.bak # ignoring instrumentation of migration file
-
 # --- instrument ---
 
 # clone instrumentation tool
 cd ..
 git clone https://github.com/cs-24-pt-10-01/Using-acorn-to-decorate-JS.git
+
+# stopping instrumentation of knex migration (by moving it out)
+mv ./fastify-realworld-example-app/knex knex
 
 # install dependencies
 cd ./Using-acorn-to-decorate-JS
@@ -20,10 +21,12 @@ node ./Using-acorn-to-decorate-JS/decorateFolder.js ./fastify-realworld-example-
 # removing instrumentation tool
 rm -rf Using-acorn-to-decorate-JS
 
+# adding knex migration back
+mv knex ./fastify-realworld-example-app/knex
+
 cd ./fastify-realworld-example-app
 
 # --- run test ---
-mv knexfile.js.bak knexfile.js # restoring knexfile.js
 
 # install stuff
 npm install newman # newman used in run-api-tests.sh
