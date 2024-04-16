@@ -1,15 +1,81 @@
-'use strict'
-const t = require('tap')
-const startServer = require('../setup-server')
-
+const rapl = require('./rapl.js');
+rapl.start("1:users.test.js:require");
+const rapl = require('./rapl.js');
+rapl.stop("1:users.test.js:require");
+'use strict';
+rapl.start("3:users.test.js:start");
+rapl.start("2:users.test.js:require");
+rapl.stop("3:users.test.js:start");
+rapl.start("4:users.test.js:require");
+const t = require('tap');
+rapl.stop("4:users.test.js:require");
+rapl.start("5:users.test.js:stop");
+rapl.stop("2:users.test.js:require");
+rapl.stop("5:users.test.js:stop");
+rapl.start("6:users.test.js:start");
+rapl.start("3:users.test.js:require");
+rapl.stop("6:users.test.js:start");
+rapl.start("7:users.test.js:require");
+const startServer = require('../setup-server');
+rapl.stop("7:users.test.js:require");
+rapl.start("8:users.test.js:stop");
+rapl.stop("3:users.test.js:require");
+rapl.stop("8:users.test.js:stop");
+rapl.start("9:users.test.js:start");
+rapl.start("5:users.test.js:test");
+rapl.stop("9:users.test.js:start");
+rapl.start("10:users.test.js:test");
 t.test('get current user without login', async t => {
-  const server = await startServer()
-  t.teardown(() => server.close())
-
+  rapl.start("11:users.test.js:start");
+  rapl.start("6:users.test.js:startServer");
+  rapl.stop("11:users.test.js:start");
+  rapl.start("12:users.test.js:startServer");
+  const server = await startServer();
+  rapl.stop("12:users.test.js:startServer");
+  rapl.start("13:users.test.js:stop");
+  rapl.stop("6:users.test.js:startServer");
+  rapl.stop("13:users.test.js:stop");
+  rapl.start("14:users.test.js:start");
+  rapl.start("7:users.test.js:teardown");
+  rapl.stop("14:users.test.js:start");
+  rapl.start("15:users.test.js:teardown");
+  t.teardown(() => server.close());
+  rapl.stop("15:users.test.js:teardown");
+  rapl.start("16:users.test.js:stop");
+  rapl.stop("7:users.test.js:teardown");
+  rapl.stop("16:users.test.js:stop");
+  rapl.start("17:users.test.js:start");
+  rapl.start("9:users.test.js:inject");
+  rapl.stop("17:users.test.js:start");
+  rapl.start("18:users.test.js:inject");
   const response = await server.inject({
     method: 'GET',
     url: '/api/user'
-  })
-  t.equal(response.statusCode, 401, 'returns a status code of 401 Unauthorized')
-  t.end()
-})
+  });
+  rapl.stop("18:users.test.js:inject");
+  rapl.start("22:users.test.js:stop");
+  rapl.stop("9:users.test.js:inject");
+  rapl.stop("22:users.test.js:stop");
+  rapl.start("23:users.test.js:start");
+  rapl.start("13:users.test.js:equal");
+  rapl.stop("23:users.test.js:start");
+  rapl.start("24:users.test.js:equal");
+  t.equal(response.statusCode, 401, 'returns a status code of 401 Unauthorized');
+  rapl.stop("24:users.test.js:equal");
+  rapl.start("25:users.test.js:stop");
+  rapl.stop("13:users.test.js:equal");
+  rapl.stop("25:users.test.js:stop");
+  rapl.start("26:users.test.js:start");
+  rapl.start("14:users.test.js:end");
+  rapl.stop("26:users.test.js:start");
+  rapl.start("27:users.test.js:end");
+  t.end();
+  rapl.stop("27:users.test.js:end");
+  rapl.start("28:users.test.js:stop");
+  rapl.stop("14:users.test.js:end");
+  rapl.stop("28:users.test.js:stop");
+});
+rapl.stop("10:users.test.js:test");
+rapl.start("30:users.test.js:stop");
+rapl.stop("5:users.test.js:test");
+rapl.stop("30:users.test.js:stop");

@@ -1,16 +1,90 @@
-const getConfig = require('../lib/config/config')
-const startServer = require('../lib/server')
-
+const rapl = require('./rapl.js');
+rapl.start("1:setup-server.js:require");
+const rapl = require('./rapl.js');
+rapl.stop("1:setup-server.js:require");
+rapl.start("2:setup-server.js:start");
+rapl.start("1:setup-server.js:require");
+rapl.stop("2:setup-server.js:start");
+rapl.start("3:setup-server.js:require");
+const getConfig = require('../lib/config/config');
+rapl.stop("3:setup-server.js:require");
+rapl.start("4:setup-server.js:stop");
+rapl.stop("1:setup-server.js:require");
+rapl.stop("4:setup-server.js:stop");
+rapl.start("5:setup-server.js:start");
+rapl.start("2:setup-server.js:require");
+rapl.stop("5:setup-server.js:start");
+rapl.start("6:setup-server.js:require");
+const startServer = require('../lib/server');
+rapl.stop("6:setup-server.js:require");
+rapl.start("7:setup-server.js:stop");
+rapl.stop("2:setup-server.js:require");
+rapl.stop("7:setup-server.js:stop");
+rapl.start("8:setup-server.js:start");
+rapl.start("4:setup-server.js:register");
+rapl.stop("8:setup-server.js:start");
+rapl.start("9:setup-server.js:stop");
 const start = async () => {
-  process.on('unhandledRejection', (err) => {
-    console.error(err)
-    process.exit(1)
-  })
-  const config = await getConfig()
-  config.fastifyInit.logger.level = 'silent'
-  const server = require('fastify')(config.fastifyInit)
-  server.register(startServer, config)
-  return server
-}
-
-module.exports = start
+  rapl.start("10:setup-server.js:start");
+  rapl.start("5:setup-server.js:on");
+  rapl.stop("10:setup-server.js:start");
+  rapl.start("11:setup-server.js:on");
+  process.on('unhandledRejection', err => {
+    rapl.start("12:setup-server.js:start");
+    rapl.start("6:setup-server.js:error");
+    rapl.stop("12:setup-server.js:start");
+    rapl.start("13:setup-server.js:error");
+    console.error(err);
+    rapl.stop("13:setup-server.js:error");
+    rapl.start("14:setup-server.js:stop");
+    rapl.stop("6:setup-server.js:error");
+    rapl.stop("14:setup-server.js:stop");
+    rapl.start("15:setup-server.js:start");
+    rapl.start("7:setup-server.js:exit");
+    rapl.stop("15:setup-server.js:start");
+    rapl.start("16:setup-server.js:exit");
+    process.exit(1);
+    rapl.stop("16:setup-server.js:exit");
+    rapl.start("17:setup-server.js:stop");
+    rapl.stop("7:setup-server.js:exit");
+    rapl.stop("17:setup-server.js:stop");
+  });
+  rapl.stop("11:setup-server.js:on");
+  rapl.start("19:setup-server.js:stop");
+  rapl.stop("5:setup-server.js:on");
+  rapl.stop("19:setup-server.js:stop");
+  rapl.start("20:setup-server.js:start");
+  rapl.start("9:setup-server.js:getConfig");
+  rapl.stop("20:setup-server.js:start");
+  rapl.start("21:setup-server.js:getConfig");
+  const config = await getConfig();
+  rapl.stop("21:setup-server.js:getConfig");
+  rapl.start("22:setup-server.js:stop");
+  rapl.stop("9:setup-server.js:getConfig");
+  rapl.stop("22:setup-server.js:stop");
+  config.fastifyInit.logger.level = 'silent';
+  rapl.start("24:setup-server.js:start");
+  rapl.start("11:setup-server.js:undefined");
+  rapl.stop("24:setup-server.js:start");
+  rapl.start("25:setup-server.js:undefined");
+  const server = require('fastify')(config.fastifyInit);
+  rapl.stop("25:setup-server.js:undefined");
+  rapl.start("26:setup-server.js:stop");
+  rapl.stop("11:setup-server.js:undefined");
+  rapl.stop("26:setup-server.js:stop");
+  rapl.start("27:setup-server.js:start");
+  rapl.start("12:setup-server.js:register");
+  rapl.stop("27:setup-server.js:start");
+  rapl.start("28:setup-server.js:register");
+  server.register(startServer, config);
+  rapl.stop("28:setup-server.js:register");
+  rapl.start("29:setup-server.js:stop");
+  rapl.stop("12:setup-server.js:register");
+  rapl.stop("29:setup-server.js:stop");
+  return server;
+};
+rapl.stop("9:setup-server.js:stop");
+rapl.start("32:setup-server.js:stop");
+rapl.stop("4:setup-server.js:register");
+rapl.stop("32:setup-server.js:stop");
+module.exports = start;
