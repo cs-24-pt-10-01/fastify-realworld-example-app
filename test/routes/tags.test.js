@@ -1,90 +1,17 @@
-const rapl = require('./rapl.js');
-rapl.start("1:tags.test.js:require");
-const rapl = require('./rapl.js');
-rapl.stop("1:tags.test.js:require");
-'use strict';
-rapl.start("3:tags.test.js:start");
-rapl.start("2:tags.test.js:require");
-rapl.stop("3:tags.test.js:start");
-rapl.start("4:tags.test.js:require");
-const t = require('tap');
-rapl.stop("4:tags.test.js:require");
-rapl.start("5:tags.test.js:stop");
-rapl.stop("2:tags.test.js:require");
-rapl.stop("5:tags.test.js:stop");
-rapl.start("6:tags.test.js:start");
-rapl.start("3:tags.test.js:require");
-rapl.stop("6:tags.test.js:start");
-rapl.start("7:tags.test.js:require");
-const startServer = require('../setup-server');
-rapl.stop("7:tags.test.js:require");
-rapl.start("8:tags.test.js:stop");
-rapl.stop("3:tags.test.js:require");
-rapl.stop("8:tags.test.js:stop");
-rapl.start("9:tags.test.js:start");
-rapl.start("5:tags.test.js:test");
-rapl.stop("9:tags.test.js:start");
-rapl.start("10:tags.test.js:test");
+'use strict'
+const t = require('tap')
+const startServer = require('../setup-server')
+
 t.test('requests the "/tags" route', async t => {
-  rapl.start("11:tags.test.js:start");
-  rapl.start("6:tags.test.js:startServer");
-  rapl.stop("11:tags.test.js:start");
-  rapl.start("12:tags.test.js:startServer");
-  const server = await startServer();
-  rapl.stop("12:tags.test.js:startServer");
-  rapl.start("13:tags.test.js:stop");
-  rapl.stop("6:tags.test.js:startServer");
-  rapl.stop("13:tags.test.js:stop");
-  rapl.start("14:tags.test.js:start");
-  rapl.start("7:tags.test.js:teardown");
-  rapl.stop("14:tags.test.js:start");
-  rapl.start("15:tags.test.js:teardown");
-  t.teardown(() => server.close());
-  rapl.stop("15:tags.test.js:teardown");
-  rapl.start("16:tags.test.js:stop");
-  rapl.stop("7:tags.test.js:teardown");
-  rapl.stop("16:tags.test.js:stop");
-  rapl.start("17:tags.test.js:start");
-  rapl.start("9:tags.test.js:inject");
-  rapl.stop("17:tags.test.js:start");
-  rapl.start("18:tags.test.js:inject");
+  const server = await startServer()
+  t.teardown(() => server.close())
+
   const response = await server.inject({
     method: 'GET',
     url: '/api/tags'
-  });
-  rapl.stop("18:tags.test.js:inject");
-  rapl.start("22:tags.test.js:stop");
-  rapl.stop("9:tags.test.js:inject");
-  rapl.stop("22:tags.test.js:stop");
-  rapl.start("23:tags.test.js:start");
-  rapl.start("14:tags.test.js:equal");
-  rapl.stop("23:tags.test.js:start");
-  rapl.start("24:tags.test.js:equal");
-  t.equal(response.statusCode, 200, 'returns a status code of 200');
-  rapl.stop("24:tags.test.js:equal");
-  rapl.start("25:tags.test.js:stop");
-  rapl.stop("14:tags.test.js:equal");
-  rapl.stop("25:tags.test.js:stop");
-  rapl.start("26:tags.test.js:start");
-  rapl.start("15:tags.test.js:equal");
-  rapl.stop("26:tags.test.js:start");
-  rapl.start("27:tags.test.js:equal");
-  t.equal(JSON.parse(response.body).tags.length, 0, 'returns an empty array');
-  rapl.stop("27:tags.test.js:equal");
-  rapl.start("28:tags.test.js:stop");
-  rapl.stop("15:tags.test.js:equal");
-  rapl.stop("28:tags.test.js:stop");
-  rapl.start("29:tags.test.js:start");
-  rapl.start("16:tags.test.js:end");
-  rapl.stop("29:tags.test.js:start");
-  rapl.start("30:tags.test.js:end");
-  t.end();
-  rapl.stop("30:tags.test.js:end");
-  rapl.start("31:tags.test.js:stop");
-  rapl.stop("16:tags.test.js:end");
-  rapl.stop("31:tags.test.js:stop");
-});
-rapl.stop("10:tags.test.js:test");
-rapl.start("33:tags.test.js:stop");
-rapl.stop("5:tags.test.js:test");
-rapl.stop("33:tags.test.js:stop");
+  })
+
+  t.equal(response.statusCode, 200, 'returns a status code of 200')
+  t.equal(JSON.parse(response.body).tags.length, 0, 'returns an empty array')
+  t.end()
+})
