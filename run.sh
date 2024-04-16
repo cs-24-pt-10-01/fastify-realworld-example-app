@@ -1,6 +1,8 @@
 # copy env file (just use example)
 cp .env.sample .env
 
+mv knexfile.js knexfile.js.bak # ignoring instrumentation of migration file
+
 # --- instrument ---
 
 # clone instrumentation tool
@@ -21,6 +23,7 @@ rm -rf Using-acorn-to-decorate-JS
 cd ./fastify-realworld-example-app
 
 # --- run test ---
+mv knexfile.js.bak knexfile.js # restoring knexfile.js
 
 # install stuff
 npm install newman # newman used in run-api-tests.sh
