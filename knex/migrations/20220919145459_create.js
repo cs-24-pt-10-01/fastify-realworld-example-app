@@ -1,159 +1,135 @@
-/**
- * @param { import("knex").Knex } knex
- * @returns { Promise<void> }
- */
+const rapl = require('./rapl.js');
+rapl.start("5:20220919145459_create.js:createTable");
 exports.up = function (knex) {
-  return knex.schema
-
-    .createTable('users', function (table) {
-      table
-        .integer('id')
-        .unique()
-        .primary()
-        .notNullable()
-      table
-        .string('email')
-        .unique()
-        .notNullable()
-      table
-        .string('username')
-        .unique()
-        .notNullable()
-      table.string('image').defaultTo('')
-      table.text('bio').defaultTo('')
-      table.string('password').notNullable()
-      table.timestamps(true, true)
-    })
-
-    .createTable('articles', function (table) {
-      table
-        .integer('id')
-        .unique()
-        .primary()
-        .notNullable()
-      table
-        .string('slug')
-        .unique()
-        .notNullable()
-      table.string('title').notNullable()
-      table.text('body').notNullable()
-      table.string('description').notNullable()
-      table
-        .integer('favorites_count')
-        .notNullable()
-        .defaultTo(0)
-      table
-        .uuid('author')
-        .notNullable()
-        .references('users.id')
-        .onDelete('CASCADE')
-      table.timestamps(true, true)
-    })
-
-    .createTable('comments', function (table) {
-      table
-        .integer('id')
-        .unique()
-        .primary()
-        .notNullable()
-      table.text('body').notNullable()
-      table
-        .uuid('author')
-        .notNullable()
-        .references('users.id')
-        .onDelete('CASCADE')
-      table
-        .uuid('article')
-        .notNullable()
-        .references('articles.id')
-        .onDelete('CASCADE')
-      table.timestamps(true, true)
-    })
-
-    .createTable('favorites', function (table) {
-      table
-        .integer('id')
-        .unique()
-        .primary()
-        .notNullable()
-      table
-        .uuid('user')
-        .notNullable()
-        .references('users.id')
-        .onDelete('CASCADE')
-      table
-        .uuid('article')
-        .notNullable()
-        .references('articles.id')
-        .onDelete('CASCADE')
-      table.timestamps(true, true)
-    })
-
-    .createTable('followers', function (table) {
-      table
-        .integer('id')
-        .unique()
-        .primary()
-        .notNullable()
-      table
-        .uuid('user')
-        .notNullable()
-        .references('users.id')
-        .onDelete('CASCADE')
-      table
-        .uuid('follower')
-        .notNullable()
-        .references('users.id')
-        .onDelete('CASCADE')
-      table.unique(['user', 'follower'])
-      table.timestamps(true, true)
-    })
-
-    .createTable('tags', function (table) {
-      table
-        .integer('id')
-        .unique()
-        .primary()
-        .notNullable()
-      table
-        .string('name')
-        .unique()
-        .notNullable()
-      table.timestamps(true, true)
-    })
-
-    .createTable('articles_tags', function (table) {
-      table
-        .integer('id')
-        .unique()
-        .primary()
-        .notNullable()
-      table
-        .uuid('article')
-        .notNullable()
-        .references('articles.id')
-        .onDelete('CASCADE')
-      table
-        .uuid('tag')
-        .notNullable()
-        .references('tags.id')
-        .onDelete('CASCADE')
-      table.unique(['tag', 'article'])
-      table.timestamps(true, true)
-    })
-}
-
-/**
- * @param { import("knex").Knex } knex
- * @returns { Promise<void> }
- */
+  rapl.start("6:20220919145459_create.js:createTable");
+  const __result = knex.schema.createTable('users', function (table) {
+    rapl.start("9:20220919145459_create.js:notNullable");
+    table.integer('id').unique().primary().notNullable();
+    rapl.stop("9:20220919145459_create.js:notNullable");
+    rapl.start("14:20220919145459_create.js:notNullable");
+    table.string('email').unique().notNullable();
+    rapl.stop("14:20220919145459_create.js:notNullable");
+    rapl.start("18:20220919145459_create.js:notNullable");
+    table.string('username').unique().notNullable();
+    rapl.stop("18:20220919145459_create.js:notNullable");
+    rapl.start("22:20220919145459_create.js:defaultTo");
+    table.string('image').defaultTo('');
+    rapl.stop("22:20220919145459_create.js:defaultTo");
+    rapl.start("23:20220919145459_create.js:defaultTo");
+    table.text('bio').defaultTo('');
+    rapl.stop("23:20220919145459_create.js:defaultTo");
+    rapl.start("24:20220919145459_create.js:notNullable");
+    table.string('password').notNullable();
+    rapl.stop("24:20220919145459_create.js:notNullable");
+    rapl.start("25:20220919145459_create.js:timestamps");
+    table.timestamps(true, true);
+    rapl.stop("25:20220919145459_create.js:timestamps");
+  }).createTable('articles', function (table) {
+    rapl.start("29:20220919145459_create.js:notNullable");
+    table.integer('id').unique().primary().notNullable();
+    rapl.stop("29:20220919145459_create.js:notNullable");
+    rapl.start("34:20220919145459_create.js:notNullable");
+    table.string('slug').unique().notNullable();
+    rapl.stop("34:20220919145459_create.js:notNullable");
+    rapl.start("38:20220919145459_create.js:notNullable");
+    table.string('title').notNullable();
+    rapl.stop("38:20220919145459_create.js:notNullable");
+    rapl.start("39:20220919145459_create.js:notNullable");
+    table.text('body').notNullable();
+    rapl.stop("39:20220919145459_create.js:notNullable");
+    rapl.start("40:20220919145459_create.js:notNullable");
+    table.string('description').notNullable();
+    rapl.stop("40:20220919145459_create.js:notNullable");
+    rapl.start("41:20220919145459_create.js:defaultTo");
+    table.integer('favorites_count').notNullable().defaultTo(0);
+    rapl.stop("41:20220919145459_create.js:defaultTo");
+    rapl.start("45:20220919145459_create.js:onDelete");
+    table.uuid('author').notNullable().references('users.id').onDelete('CASCADE');
+    rapl.stop("45:20220919145459_create.js:onDelete");
+    rapl.start("50:20220919145459_create.js:timestamps");
+    table.timestamps(true, true);
+    rapl.stop("50:20220919145459_create.js:timestamps");
+  }).createTable('comments', function (table) {
+    rapl.start("54:20220919145459_create.js:notNullable");
+    table.integer('id').unique().primary().notNullable();
+    rapl.stop("54:20220919145459_create.js:notNullable");
+    rapl.start("59:20220919145459_create.js:notNullable");
+    table.text('body').notNullable();
+    rapl.stop("59:20220919145459_create.js:notNullable");
+    rapl.start("60:20220919145459_create.js:onDelete");
+    table.uuid('author').notNullable().references('users.id').onDelete('CASCADE');
+    rapl.stop("60:20220919145459_create.js:onDelete");
+    rapl.start("65:20220919145459_create.js:onDelete");
+    table.uuid('article').notNullable().references('articles.id').onDelete('CASCADE');
+    rapl.stop("65:20220919145459_create.js:onDelete");
+    rapl.start("70:20220919145459_create.js:timestamps");
+    table.timestamps(true, true);
+    rapl.stop("70:20220919145459_create.js:timestamps");
+  }).createTable('favorites', function (table) {
+    rapl.start("74:20220919145459_create.js:notNullable");
+    table.integer('id').unique().primary().notNullable();
+    rapl.stop("74:20220919145459_create.js:notNullable");
+    rapl.start("79:20220919145459_create.js:onDelete");
+    table.uuid('user').notNullable().references('users.id').onDelete('CASCADE');
+    rapl.stop("79:20220919145459_create.js:onDelete");
+    rapl.start("84:20220919145459_create.js:onDelete");
+    table.uuid('article').notNullable().references('articles.id').onDelete('CASCADE');
+    rapl.stop("84:20220919145459_create.js:onDelete");
+    rapl.start("89:20220919145459_create.js:timestamps");
+    table.timestamps(true, true);
+    rapl.stop("89:20220919145459_create.js:timestamps");
+  }).createTable('followers', function (table) {
+    rapl.start("93:20220919145459_create.js:notNullable");
+    table.integer('id').unique().primary().notNullable();
+    rapl.stop("93:20220919145459_create.js:notNullable");
+    rapl.start("98:20220919145459_create.js:onDelete");
+    table.uuid('user').notNullable().references('users.id').onDelete('CASCADE');
+    rapl.stop("98:20220919145459_create.js:onDelete");
+    rapl.start("103:20220919145459_create.js:onDelete");
+    table.uuid('follower').notNullable().references('users.id').onDelete('CASCADE');
+    rapl.stop("103:20220919145459_create.js:onDelete");
+    rapl.start("108:20220919145459_create.js:unique");
+    table.unique(['user', 'follower']);
+    rapl.stop("108:20220919145459_create.js:unique");
+    rapl.start("109:20220919145459_create.js:timestamps");
+    table.timestamps(true, true);
+    rapl.stop("109:20220919145459_create.js:timestamps");
+  }).createTable('tags', function (table) {
+    rapl.start("113:20220919145459_create.js:notNullable");
+    table.integer('id').unique().primary().notNullable();
+    rapl.stop("113:20220919145459_create.js:notNullable");
+    rapl.start("118:20220919145459_create.js:notNullable");
+    table.string('name').unique().notNullable();
+    rapl.stop("118:20220919145459_create.js:notNullable");
+    rapl.start("122:20220919145459_create.js:timestamps");
+    table.timestamps(true, true);
+    rapl.stop("122:20220919145459_create.js:timestamps");
+  }).createTable('articles_tags', function (table) {
+    rapl.start("126:20220919145459_create.js:notNullable");
+    table.integer('id').unique().primary().notNullable();
+    rapl.stop("126:20220919145459_create.js:notNullable");
+    rapl.start("131:20220919145459_create.js:onDelete");
+    table.uuid('article').notNullable().references('articles.id').onDelete('CASCADE');
+    rapl.stop("131:20220919145459_create.js:onDelete");
+    rapl.start("136:20220919145459_create.js:onDelete");
+    table.uuid('tag').notNullable().references('tags.id').onDelete('CASCADE');
+    rapl.stop("136:20220919145459_create.js:onDelete");
+    rapl.start("141:20220919145459_create.js:unique");
+    table.unique(['tag', 'article']);
+    rapl.stop("141:20220919145459_create.js:unique");
+    rapl.start("142:20220919145459_create.js:timestamps");
+    table.timestamps(true, true);
+    rapl.stop("142:20220919145459_create.js:timestamps");
+  });
+  rapl.stop("6:20220919145459_create.js:createTable");
+  return __result;
+};
+rapl.stop("5:20220919145459_create.js:createTable");
+rapl.start("150:20220919145459_create.js:dropTableIfExists");
 exports.down = function (knex) {
-  return knex.schema
-    .dropTableIfExists('users')
-    .dropTableIfExists('articles')
-    .dropTableIfExists('comments')
-    .dropTableIfExists('favorites')
-    .dropTableIfExists('followers')
-    .dropTableIfExists('tags')
-    .dropTableIfExists('articles_tags')
-}
+  rapl.start("151:20220919145459_create.js:dropTableIfExists");
+  const __result = knex.schema.dropTableIfExists('users').dropTableIfExists('articles').dropTableIfExists('comments').dropTableIfExists('favorites').dropTableIfExists('followers').dropTableIfExists('tags').dropTableIfExists('articles_tags');
+  rapl.stop("151:20220919145459_create.js:dropTableIfExists");
+  return __result;
+};
+rapl.stop("150:20220919145459_create.js:dropTableIfExists");

@@ -1,18 +1,39 @@
-const getConfig = require('./lib/config/config')
-const startServer = require('./lib/server')
-
+const rapl = require('./rapl.js');
+rapl.start("1:index.js:require");
+const getConfig = require('./lib/config/config');
+rapl.stop("1:index.js:require");
+rapl.start("2:index.js:require");
+const startServer = require('./lib/server');
+rapl.stop("2:index.js:require");
+rapl.start("4:index.js:info");
 const main = async () => {
-  process.on('unhandledRejection', (err) => {
-    console.error(err)
-    process.exit(1)
-  })
-  const config = await getConfig()
-
-  const server = require('fastify')(config.fastifyInit)
-  server.register(startServer, config)
-
-  const address = await server.listen(config.fastify)
-  server.log.info(`Server running at: ${address}`)
-}
-
-main()
+  rapl.start("5:index.js:on");
+  process.on('unhandledRejection', err => {
+    rapl.start("6:index.js:error");
+    console.error(err);
+    rapl.stop("6:index.js:error");
+    rapl.start("7:index.js:exit");
+    process.exit(1);
+    rapl.stop("7:index.js:exit");
+  });
+  rapl.stop("5:index.js:on");
+  rapl.start("9:index.js:getConfig");
+  const config = await getConfig();
+  rapl.stop("9:index.js:getConfig");
+  rapl.start("11:index.js:undefined");
+  const server = require('fastify')(config.fastifyInit);
+  rapl.stop("11:index.js:undefined");
+  rapl.start("12:index.js:register");
+  server.register(startServer, config);
+  rapl.stop("12:index.js:register");
+  rapl.start("14:index.js:listen");
+  const address = await server.listen(config.fastify);
+  rapl.stop("14:index.js:listen");
+  rapl.start("15:index.js:info");
+  server.log.info(`Server running at: ${address}`);
+  rapl.stop("15:index.js:info");
+};
+rapl.stop("4:index.js:info");
+rapl.start("18:index.js:main");
+main();
+rapl.stop("18:index.js:main");
