@@ -11,6 +11,8 @@ npm install
 # starting the service
 npm start & 
 
+sleep 5s
+
 # run the tests
 APIURL=http://localhost:5000/api ./run-api-tests.sh
 
