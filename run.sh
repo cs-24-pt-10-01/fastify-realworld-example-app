@@ -1,5 +1,5 @@
 # full
-cd ./Orginal
+cd ./Original
 bash ./run.sh
 cd ..
 
