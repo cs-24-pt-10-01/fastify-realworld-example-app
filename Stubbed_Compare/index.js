@@ -1,3 +1,7 @@
+const process = require('node:process')
+const rapl = require('./rapl.js')
+rapl.start("Stubbed_Compare");
+
 const getConfig = require('./lib/config/config')
 const startServer = require('./lib/server')
 
@@ -16,3 +20,7 @@ const main = async () => {
 }
 
 main()
+
+process.on("exit", () => {
+  rapl.stop("Stubbed_Compare");
+})
