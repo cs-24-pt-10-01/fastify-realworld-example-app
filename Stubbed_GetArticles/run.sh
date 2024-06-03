@@ -17,3 +17,6 @@ APIURL=http://localhost:5000/api ./run-api-tests.sh
 
 # sending SIGINT (ctrl+c) to the process
 kill -s SIGINT $PID
+
+sleep 2s
+pkill node
