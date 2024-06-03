@@ -21,6 +21,7 @@ const main = async () => {
 
 main()
 
-process.on("exit", () => {
+process.on("SIGINT", () => {
   rapl.stop("Stubbed_Hash");
+  process.exit();
 })

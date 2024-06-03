@@ -7,12 +7,13 @@ npm install newman # newman used in run-api-tests.sh
 npm install
 
 # starting the service
-npm start & 
+npm start &
+PID=($!)
 
 sleep 5s
 
 # run the tests
 APIURL=http://localhost:5000/api ./run-api-tests.sh
 
-# stopping the service (warning this will kill all node processes)
-pkill node
+# sending SIGINT (ctrl+c) to the process
+kill -s SIGINT $PID
