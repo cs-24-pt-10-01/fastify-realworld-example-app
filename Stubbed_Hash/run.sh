@@ -7,7 +7,7 @@ npm install newman # newman used in run-api-tests.sh
 npm install
 
 # starting the service
-npm start &
+node . &
 PID=($!)
 
 sleep 5s
