@@ -1,3 +1,5 @@
+This is a fork of the Fastify RealWorld example. This repo contains a run file used to instrument the code and run it with our tool Thor
+
 # ![RealWorld Example App](logo.png)
 
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
